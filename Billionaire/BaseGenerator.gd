@@ -49,9 +49,9 @@ func _input(event):
 	var mouse_pos = get_global_mouse_position()
 	if event is InputEventKey and event.pressed:
 		if event.scancode == KEY_1 and not event.echo:
-			SpawnFlagAtPos(mouse_pos, Global.ColorIdx.BLUE)
+			SpawnFlagAtPos(mouse_pos, Global.ColorIdx.GREEN)
 		if event.scancode == KEY_2 and not event.echo:
-			SpawnFlagAtPos(mouse_pos, Global.ColorIdx.RED)
+			SpawnFlagAtPos(mouse_pos, Global.ColorIdx.YELLOW)
 	elif event is InputEventMouseButton and event.is_pressed() and event.button_index == BUTTON_LEFT:
 		CurrentClickedFlag = FindClosestFlag(mouse_pos)
 		if CurrentClickedFlag:
