@@ -401,3 +401,5 @@ zoom = Vector2( 2.117, 1.903 )
 script = ExtResource( 3 )
 NumBasesToSpawn = 2
 NonWallTileMapId = 8
+
+[node name="Flags" type="Node2D" parent="Bases"]

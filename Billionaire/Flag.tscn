@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Flag.gd" type="Script" id=1]
+[ext_resource path="res://Kenney/platformer-art-complete-pack-0/Base pack/Items/flagBlue.png" type="Texture" id=2]
+
+[node name="Flag" type="Sprite"]
+texture = ExtResource( 2 )
+script = ExtResource( 1 )

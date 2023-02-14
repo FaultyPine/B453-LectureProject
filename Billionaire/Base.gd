@@ -1,21 +1,20 @@
 extends Node2D
 
+var baseColor = Global.ColorIdx.BLUE
+onready var BaseSpawnNode = $Billions
+export var SpawnRadius: float
+const MaxBillions: int = 10
 onready var Billion = preload("res://Billion.tscn")
 
 
-var baseColor = Global.ColorIdx.BlUE
-export var SpawnRadius: float
-
 func _ready():
-	pass
-
-
+	$Timer.start()
 
 func SpawnBillionAtPosition(pos: Vector2):
 	var billion = Billion.instance()
 	billion.SetColor(baseColor)
 	billion.get_node(".").position = pos
-	self.add_child(billion)
+	BaseSpawnNode.add_child(billion)
 
 func SpawnBillion():
 	var spawn_position = Vector2(0,0)
@@ -24,5 +23,6 @@ func SpawnBillion():
 	SpawnBillionAtPosition(spawn_position)
 
 func _on_Timer_timeout():
-	SpawnBillion()
-	$Timer.start()
+	if len(BaseSpawnNode.get_children()) < MaxBillions:
+		SpawnBillion()
+		$Timer.start()

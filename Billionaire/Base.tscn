@@ -10,6 +10,8 @@ radius = 49.8647
 script = ExtResource( 1 )
 SpawnRadius = 100.0
 
+[node name="Billions" type="Node2D" parent="."]
+
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
 

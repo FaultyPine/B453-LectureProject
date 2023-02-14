@@ -2,9 +2,12 @@ extends Node2D
 
 onready var BaseScene = preload("res://Base.tscn")
 onready var tileMap = $"../TileMap"
-	
+onready var FlagScene = preload("res://Flag.tscn")
+var numFlagsPlaced = [0,0,0,0]
+onready var FlagsParent = $Flags
 export var NumBasesToSpawn: int
 export var NonWallTileMapId: int
+var MaxFlagsPerBase: int = 2
 
 var BaseColorSprites = [
 	"res://Kenney/spaceshooter/PNG/ufoGreen.png",
@@ -24,6 +27,40 @@ func SpawnBaseAtPosition(pos: Vector2, colorIdx):
 	rootBaseNode.position = pos
 	add_child(base)
 
+
+
+func SpawnFlagAtPos(pos: Vector2, color):
+	if (numFlagsPlaced[color] >= 2): return
+	numFlagsPlaced[color] += 1
+	var flag = FlagScene.instance()
+	flag.get_node(".").texture = flag.GetFlagSprite(color)
+	flag.position = pos
+	FlagsParent.add_child(flag)
+
+func FindClosestFlag(mouse_pos: Vector2):
+	var closest = null
+	for child in FlagsParent.get_children():
+		if closest == null or child.position.distance_to(mouse_pos) < closest.position.distance_to(mouse_pos):
+			closest = child
+	return closest
+
+var CurrentClickedFlag = null
+func _input(event):
+	var mouse_pos = get_global_mouse_position()
+	if event is InputEventKey and event.pressed:
+		if event.scancode == KEY_1 and not event.echo:
+			SpawnFlagAtPos(mouse_pos, Global.ColorIdx.BLUE)
+		if event.scancode == KEY_2 and not event.echo:
+			SpawnFlagAtPos(mouse_pos, Global.ColorIdx.RED)
+	elif event is InputEventMouseButton and event.is_pressed() and event.button_index == BUTTON_LEFT:
+		CurrentClickedFlag = FindClosestFlag(mouse_pos)
+		if CurrentClickedFlag:
+			CurrentClickedFlag.FlagClicked()
+	elif event is InputEventMouseButton and not event.is_pressed() and event.button_index == BUTTON_LEFT:
+		if CurrentClickedFlag:
+			CurrentClickedFlag.FlagReleased(mouse_pos)
+			CurrentClickedFlag = null
+	
 
 func _ready():
 	# select random tilemap tile and spawn base there

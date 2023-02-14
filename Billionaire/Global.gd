@@ -4,7 +4,7 @@ extends Node
 enum ColorIdx {
 	GREEN,
 	YELLOW,
-	BlUE,
+	BLUE,
 	RED,
 }
 
