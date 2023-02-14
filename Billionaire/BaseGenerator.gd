@@ -33,7 +33,7 @@ func SpawnFlagAtPos(pos: Vector2, color):
 	if (numFlagsPlaced[color] >= 2): return
 	numFlagsPlaced[color] += 1
 	var flag = FlagScene.instance()
-	flag.get_node(".").texture = flag.GetFlagSprite(color)
+	flag.get_node("./Sprite").texture = flag.GetFlagSprite(color)
 	flag.position = pos
 	FlagsParent.add_child(flag)
 
