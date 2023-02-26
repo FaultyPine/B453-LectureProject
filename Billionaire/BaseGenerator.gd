@@ -35,6 +35,7 @@ func SpawnFlagAtPos(pos: Vector2, color):
 	var flag = FlagScene.instance()
 	flag.get_node("./Sprite").texture = flag.GetFlagSprite(color)
 	flag.position = pos
+	flag.color = color
 	FlagsParent.add_child(flag)
 
 func FindClosestFlag(mouse_pos: Vector2):
@@ -64,7 +65,14 @@ func _input(event):
 
 func _ready():
 	# select random tilemap tile and spawn base there
+	if not tileMap: 
+		print("Tilemap not found!") 
+		return
 	var tileMapOpenCells = tileMap.get_used_cells_by_id(NonWallTileMapId)
+	if len(tileMapOpenCells) < 1:
+		print("TileMap not properly set up!")
+		return
+		
 	for i in range(NumBasesToSpawn):
 		var randCellIdx = rand_range(0, tileMapOpenCells.size())
 		var randCell: Vector2 = tileMapOpenCells[randCellIdx]

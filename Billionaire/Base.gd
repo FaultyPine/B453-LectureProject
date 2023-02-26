@@ -18,8 +18,9 @@ func SpawnBillionAtPosition(pos: Vector2):
 
 func SpawnBillion():
 	var spawn_position = Vector2(0,0)
-	spawn_position.x = rand_range(-SpawnRadius, SpawnRadius)
-	spawn_position.y = rand_range(-SpawnRadius, SpawnRadius)	
+	var random_vector = Vector2(rand_range(-1, 1), rand_range(-1, 1))
+	random_vector = random_vector.normalized()
+	spawn_position = random_vector * SpawnRadius
 	SpawnBillionAtPosition(spawn_position)
 
 func _on_Timer_timeout():

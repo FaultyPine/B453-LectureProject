@@ -6,6 +6,7 @@ var FlagColorSprites = [
 	"res://Kenney/platformer-art-complete-pack-0/Base pack/Items/flagBlue.png",
 	"res://Kenney/platformer-art-complete-pack-0/Base pack/Items/flagRed.png",
 ];
+export var color = 0
 func GetFlagSprite(color):
 	return load(FlagColorSprites[color])
 
