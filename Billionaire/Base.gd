@@ -3,7 +3,7 @@ extends Node2D
 var baseColor = Global.ColorIdx.BLUE
 onready var BaseSpawnNode = $Billions
 export var SpawnRadius: float
-const MaxBillions: int = 10
+const MaxBillions: int = 1
 onready var Billion = preload("res://Billion.tscn")
 
 

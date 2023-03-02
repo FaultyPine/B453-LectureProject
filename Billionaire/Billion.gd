@@ -49,21 +49,44 @@ func move_billion(delta):
 			self.set_linear_damp(deceleration)
 			self.applied_force = Vector2.ZERO
 
+# TODO
+onready var BasesRoot = $"../../../"
+# bases has children: [Flags, Base, Base2, Base3, etc]
+func GetNearestEnemy():
+	var nearest = null
+	for child in BasesRoot.get_children():
+		if "Base" in child.name and child.baseColor != color: # is a base and is not our own base
+			var billionsHolder = child.get_node("Billions")
+			for billion in billionsHolder.get_children():
+				if nearest == null or global_position.distance_to(billion.global_position) < global_position.distance_to(nearest.global_position):
+					nearest = billion
+	return nearest
+
+onready var turretLineNode = $TurretLine
+func update_turret_line():	
+	var local_pos = to_local(global_position)
+	var to_nearest_enemy_dir = (to_local(GetNearestEnemy().global_position) - local_pos).normalized()
+	var line_length = 20.0
+	var to_nearest_enemy_pos = local_pos + (to_nearest_enemy_dir * line_length)
+	turretLineNode.points = PoolVector2Array([local_pos, to_nearest_enemy_pos])
+	
 func _physics_process(delta):
 	move_billion(delta)
-		
+
 
 
 func _process(delta):
 	#update() # ensure _draw is called every frame
-	
+	update_turret_line()
 	pass
-	
+
 func _draw():
 	# draw line between billion and closest flag to visualize where they want to go
 	#var closestFlag = FindClosestFlag(self.global_position)
 	#if closestFlag:
 		#draw_line(to_local(global_position), to_local(closestFlag.global_position), Color.red)
+	
+
 	pass
 
 func _ready():
